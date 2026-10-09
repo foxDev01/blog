@@ -73,6 +73,18 @@
           >
             <MagnifyingGlassIcon class="w-5 h-5" />
           </button>
+
+          <!-- Переключатель темы -->
+          <button
+            type="button"
+            @click="themeStore.toggleTheme()"
+            class="p-2 text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors"
+            :title="themeStore.isDark ? 'Светлая тема' : 'Тёмная тема'"
+            :aria-label="themeStore.isDark ? 'Включить светлую тему' : 'Включить тёмную тему'"
+          >
+            <SunIcon v-if="themeStore.isDark" class="w-5 h-5" />
+            <MoonIcon v-else class="w-5 h-5" />
+          </button>
           
           <!-- Уведомления (заглушка) -->
           <button
@@ -278,9 +290,10 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
 
 import { useToast } from 'vue-toastification'
 import {
@@ -296,7 +309,8 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
   Bars3Icon,
-  CreditCardIcon
+  SunIcon,
+  MoonIcon
 } from '@heroicons/vue/24/outline'
 
 export default {
@@ -314,11 +328,13 @@ export default {
     ArrowRightOnRectangleIcon,
     ChevronDownIcon,
     Bars3Icon,
-    CreditCardIcon
+    SunIcon,
+    MoonIcon
   },
   setup() {
     const router = useRouter()
     const authStore = useAuthStore()
+    const themeStore = useThemeStore()
    
     const toast = useToast()
     
@@ -366,6 +382,7 @@ export default {
     
     return {
       authStore,
+      themeStore,
    
       searchQuery,
       showUserMenu,

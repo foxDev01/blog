@@ -5,7 +5,10 @@ import router from './router'
 import App from './App.vue'
 
 import './assets/css/main.css'
+import './assets/css/dark.css'
 import 'vue-toastification/dist/index.css'
+
+import { useThemeStore } from './stores/theme'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -29,6 +32,10 @@ const toastOptions = {
 }
 
 app.use(pinia)
+
+// Инициализируем тему (сохраняется в localStorage)
+useThemeStore().init()
+
 app.use(router)
 app.use(Toast, toastOptions)
 
